@@ -8,6 +8,9 @@ more details on pdb++ features.
 
 from __future__ import print_function
 
+from operator import itemgetter
+
+
 def get_version():
     try:
         import pkg_resources
@@ -63,6 +66,12 @@ except ImportError:
     except ImportError:
         from StringIO import StringIO
 
+
+def get_method_function(method):
+    if sys.version_info >= (2, 6):
+        return method.__func__
+    else:
+        return method.im_func
 
 def get_function_name(func):
     if sys.version_info >= (2, 6):
@@ -279,17 +288,14 @@ class Pdb(pdb.Pdb, ConfigurableClass):
             self.tb_lineno[tb.tb_frame] = lineno
             tb = tb.tb_next
 
+    @staticmethod
+    def is_hidden_frame(frame):
+        return is_hidden_frame(frame)
+
     def _is_hidden(self, frame):
         if not self.config.enable_hidden_frames:
             return False
-        consts = frame.f_code.co_consts
-        if consts and consts[-1] is _HIDE_FRAME:
-            return True
-        if frame.f_globals.get('__unittest'):
-            return True
-        if frame.f_locals.get('__tracebackhide__') \
-           or frame.f_globals.get('__tracebackhide__'):
-            return True
+        return self.is_hidden_frame(frame)
 
     def get_stack(self, f, t):
         # show all the frames, except the ones that explicitly ask to be hidden
@@ -1053,30 +1059,91 @@ def set_tracex():
 set_tracex._dont_inline_ = True
 
 _HIDE_FRAME = object()
+_HIDDEN_FILES = set()
 
-def hideframe(func):
-    c = get_function_code(func)
-    if sys.version_info < (3, ):
-        c = types.CodeType(
-            c.co_argcount, c.co_nlocals, c.co_stacksize,
-            c.co_flags, c.co_code,
-            c.co_consts + (_HIDE_FRAME,),
-            c.co_names, c.co_varnames, c.co_filename,
-            c.co_name, c.co_firstlineno, c.co_lnotab,
-            c.co_freevars, c.co_cellvars)
-    else:
+def ismethodorfunction(obj):
+    return inspect.ismethod(obj) or inspect.isfunction(obj)
+
+def get_function_and_method_members(obj):
+    get_members = lambda x: map(itemgetter(1), x)
+    methods = inspect.getmembers(obj, inspect.ismethod)
+    funcs = inspect.getmembers(obj, inspect.isfunction)
+    return get_members(funcs), get_members(methods)
+
+def hideframe(obj, set_trace=set_trace):
+    def hideframe_code(c):
+        if sys.version_info < (3,):
+            return types.CodeType(
+                c.co_argcount, c.co_nlocals, c.co_stacksize,
+                c.co_flags, c.co_code,
+                c.co_consts + (_HIDE_FRAME,),
+                c.co_names, c.co_varnames, c.co_filename,
+                c.co_name, c.co_firstlineno, c.co_lnotab,
+                c.co_freevars, c.co_cellvars)
         # Python 3 takes an additional arg -- kwonlyargcount
         # typically set to 0
-        c = types.CodeType(
+        return types.CodeType(
             c.co_argcount, 0, c.co_nlocals, c.co_stacksize,
             c.co_flags, c.co_code,
             c.co_consts + (_HIDE_FRAME,),
             c.co_names, c.co_varnames, c.co_filename,
             c.co_name, c.co_firstlineno, c.co_lnotab,
             c.co_freevars, c.co_cellvars)
-    func.func_code = c
-    return func
 
+    def hideframe_func(*funcs):
+        for func in funcs:
+            c = get_function_code(func)
+            c = hideframe_code(c)
+            func.func_code = c
+        return funcs[-1] if funcs else None
+
+    def hideframe_method(*methods):
+        for method in methods:
+            func = get_method_function(method)
+            hideframe_func(func)
+        return methods[-1] if methods else None
+
+    def hideframe_frame(frame):
+        filename = os.path.abspath(frame.f_code.co_filename)
+        _HIDDEN_FILES.add(filename)
+        # set_trace()
+        return frame
+
+    def hideframe_class(cls):
+        funcs, methods = get_function_and_method_members(cls)
+        hideframe_func(*funcs)
+        hideframe_method(*methods)
+        return cls
+
+    if inspect.isfunction(obj):
+        return hideframe_func(obj)
+    if inspect.ismethod(obj):
+        return hideframe_method(obj)
+    if inspect.isclass(obj):
+        return hideframe_class(obj)
+    if inspect.isframe(obj):
+        return hideframe_frame(obj)
+    set_trace()
+    return obj
+
+def hidefile():
+    f = sys._getframe().f_back
+    return hideframe(f)
+
+
+def is_hidden_frame(frame):
+    c = frame.f_code
+    consts = c.co_consts
+    filename = os.path.abspath(c.co_filename)
+    if filename in _HIDDEN_FILES:
+        return True
+    if consts and consts[-1] is _HIDE_FRAME:
+        return True
+    if frame.f_globals.get('__unittest'):
+        return True
+    if frame.f_locals.get('__tracebackhide__') \
+            or frame.f_globals.get('__tracebackhide__'):
+        return True
 
 def always(obj, value):
     return True

@@ -9,11 +9,13 @@ import readline
 import pdb
 
 class Config(pdb.DefaultConfig):
-
+    stick_by_default = True
     editor = 'e'
     stdin_paste = 'epaste'
     filename_color = pdb.Color.lightgray
     use_terminal256formatter = False
+    truncate_long_lines = False
+    #enable_hidden_frames = False
     #exec_if_unfocused = "play ~/sounds/dialtone.wav 2> /dev/null &"
 
     def __init__(self):

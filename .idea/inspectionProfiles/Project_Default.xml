@@ -1,0 +1,56 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8Inspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="super.update" />
+          <option value="_abcoll.Mapping.__setitem__" />
+          <option value="_abcoll.Mapping.__delitem__" />
+          <option value="format.autoprint.get_ipython" />
+          <option value="sys.pdb_force" />
+          <option value="dict.__add__" />
+          <option value="threading.get_ident" />
+          <option value="logging.Logger.manager" />
+          <option value="super.*" />
+          <option value="super.__setitem__" />
+          <option value="super.__getattr__" />
+          <option value="sys.in_anki" />
+          <option value="sys.in_pydev" />
+          <option value="sys.debug" />
+          <option value="sys.ank" />
+          <option value="sys.pdb" />
+          <option value="sys.pme" />
+          <option value="sys.pm" />
+          <option value="meta.base.MetaGenerator.set_mangled" />
+          <option value="methods.AutoClassProperty.instance_property" />
+          <option value="dicts.ank_bunch.ank_bunch.Bunch.*" />
+          <option value="pywintypes.error" />
+          <option value="methods.AutoClassProperty.new_instance_property" />
+          <option value="_abcoll.MutableMapping.__getattribute__" />
+          <option value="meta.base.fget" />
+          <option value="meta.base.__init__" />
+          <option value="sys.pdb_force_any" />
+          <option value="sys.debug__" />
+          <option value="collections.MutableMapping.__getattribute__" />
+          <option value="methods.AutoClassProperty.class_property" />
+          <option value="sys.trace" />
+          <option value="ipyterminal.ipycolorizer.pretty._PrettyPrinterBase.indentation" />
+          <option value="ipyterminal.ipycolorizer.pretty._PrettyPrinterBase.begin_group" />
+          <option value="ipyterminal.ipycolorizer.pretty._PrettyPrinterBase.end_group" />
+          <option value="anknotes.methods.AutoClassProperty.instance_property" />
+          <option value="anknotes.dicts.ank_bunch.ank_bunch.Bunch.*" />
+          <option value="anknotes.methods.AutoClassProperty.new_instance_property" />
+          <option value="anknotes.methods.AutoClassProperty.class_property" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+  </profile>
+</component>

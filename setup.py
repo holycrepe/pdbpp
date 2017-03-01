@@ -49,7 +49,7 @@ if sys.version_info < (2, 7):
 
 
 setup(
-    name='pdbpp',
+    name='pdbpp_holycrepe',
     use_scm_version=True,
     author='Antonio Cuni',
     author_email='anto.cuni@gmail.com',

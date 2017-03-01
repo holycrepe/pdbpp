@@ -1,0 +1,6 @@
+fancycompleter>=0.2
+wmctrl
+pygments
+
+[funcsigs]
+funcsigs

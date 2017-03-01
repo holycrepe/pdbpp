@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{dad86b3c-920f-4ac4-a44a-fd47649804f4}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>pdb.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include=".git\desktop.ini" />
+    <Content Include=".git\hooks\desktop.ini" />
+    <Content Include=".git\info\desktop.ini" />
+    <Content Include=".git\logs\desktop.ini" />
+    <Content Include=".git\logs\refs\desktop.ini" />
+    <Content Include=".git\logs\refs\heads\desktop.ini" />
+    <Content Include=".git\logs\refs\remotes\desktop.ini" />
+    <Content Include=".git\logs\refs\remotes\origin\desktop.ini" />
+    <Content Include=".git\objects\desktop.ini" />
+    <Content Include=".git\objects\info\desktop.ini" />
+    <Content Include=".git\objects\pack\desktop.ini" />
+    <Content Include=".git\refs\desktop.ini" />
+    <Content Include=".git\refs\heads\desktop.ini" />
+    <Content Include=".git\refs\remotes\desktop.ini" />
+    <Content Include=".git\refs\remotes\origin\desktop.ini" />
+    <Content Include=".git\refs\tags\desktop.ini" />
+    <Content Include=".idea\desktop.ini" />
+    <Content Include=".idea\inspectionProfiles\desktop.ini" />
+    <Content Include="desktop.ini" />
+    <Content Include="pdbpp_holycrepe.egg-info\dependency_links.txt" />
+    <Content Include="pdbpp_holycrepe.egg-info\desktop.ini" />
+    <Content Include="pdbpp_holycrepe.egg-info\requires.txt" />
+    <Content Include="pdbpp_holycrepe.egg-info\SOURCES.txt" />
+    <Content Include="pdbpp_holycrepe.egg-info\top_level.txt" />
+    <Content Include="pytest.ini" />
+    <Content Include="screenshot.png" />
+    <Content Include="testing\desktop.ini" />
+    <Content Include="tox.ini" />
+    <Content Include="_pdbpp_path_hack\desktop.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="pdb.py" />
+    <Compile Include="pdbrc.py" />
+    <Compile Include="setup.py" />
+    <Compile Include="testing\test_pdb.py" />
+    <Compile Include="testing\__init__.py" />
+    <Compile Include="_pdbpp_path_hack\pdb.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git" />
+    <Folder Include=".git\hooks" />
+    <Folder Include=".git\info" />
+    <Folder Include=".git\logs" />
+    <Folder Include=".git\logs\refs" />
+    <Folder Include=".git\logs\refs\heads" />
+    <Folder Include=".git\logs\refs\remotes" />
+    <Folder Include=".git\logs\refs\remotes\origin" />
+    <Folder Include=".git\objects" />
+    <Folder Include=".git\objects\info" />
+    <Folder Include=".git\objects\pack" />
+    <Folder Include=".git\refs" />
+    <Folder Include=".git\refs\heads" />
+    <Folder Include=".git\refs\remotes" />
+    <Folder Include=".git\refs\remotes\origin" />
+    <Folder Include=".git\refs\tags" />
+    <Folder Include=".idea" />
+    <Folder Include=".idea\inspectionProfiles" />
+    <Folder Include="pdbpp_holycrepe.egg-info" />
+    <Folder Include="testing" />
+    <Folder Include="_pdbpp_path_hack" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
